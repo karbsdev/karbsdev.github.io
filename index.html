@@ -309,7 +309,13 @@
 
 <section>
   <div class="section-label">Capability</div>
-  <h2>Services</h2>
+  <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:12px 20px; margin-bottom:8px;">
+    <h2 style="margin-bottom:0;">Services</h2>
+    <button type="button" class="btn-outline" id="bookCallShortcut">
+      Book a free 30-min call <span class="btn-arrow">→</span>
+    </button>
+  </div>
+  <p style="font-size:14px; color:var(--text-muted); margin-bottom:28px;">$120/hr &middot; first 30 minutes are free, no strings attached.</p>
   <div id="serviceList"></div>
 </section>
 
@@ -352,6 +358,7 @@
         <option>Collaboration request</option>
         <option>Mentorship request</option>
         <option>Consulting request</option>
+        <option>Free 30-min discovery call</option>
         <option>Credly verification request</option>
         <option>Other</option>
       </select>
@@ -359,6 +366,10 @@
     <div class="form-field" id="cf-other-wrap" hidden>
       <label for="cf-other">Please specify</label>
       <input id="cf-other" name="reason_other" type="text">
+    </div>
+    <div class="form-field" id="cf-phone-wrap" hidden>
+      <label for="cf-phone">Phone number</label>
+      <input id="cf-phone" name="phone" type="tel">
     </div>
     <div class="form-field">
       <label for="cf-message">Details</label>
@@ -570,11 +581,18 @@
   const subjectField = document.getElementById('cf-subject');
   const otherWrap = document.getElementById('cf-other-wrap');
   const otherInput = document.getElementById('cf-other');
+  const phoneWrap = document.getElementById('cf-phone-wrap');
+  const phoneInput = document.getElementById('cf-phone');
 
   function syncReason(){
     const isOther = reasonSelect.value === 'Other';
     otherWrap.hidden = !isOther;
     otherInput.required = isOther;
+
+    const isCall = reasonSelect.value === 'Free 30-min discovery call';
+    phoneWrap.hidden = !isCall;
+    phoneInput.required = isCall;
+
     subjectField.value = isOther && otherInput.value
       ? 'Portfolio: Other — ' + otherInput.value
       : 'Portfolio: ' + reasonSelect.value;
@@ -588,6 +606,15 @@
   verifyShortcut.addEventListener('click', () => {
     reasonSelect.value = 'Credly verification request';
     subjectField.value = 'Portfolio: Credly verification request';
+    document.getElementById('contact-form').scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('cf-name').focus({ preventScroll: true });
+  });
+
+  // "Book a free 30-min call" shortcut — scrolls to the form and preselects the reason
+  const bookCallShortcut = document.getElementById('bookCallShortcut');
+  bookCallShortcut.addEventListener('click', () => {
+    reasonSelect.value = 'Free 30-min discovery call';
+    syncReason();
     document.getElementById('contact-form').scrollIntoView({ behavior: 'smooth' });
     document.getElementById('cf-name').focus({ preventScroll: true });
   });
