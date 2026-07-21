@@ -236,7 +236,7 @@
     font-weight:500;
   }
 
-  /* ---------- footer ---------- */
+  /* ---------- footer / contact form ---------- */
   footer{padding:40px 0 64px;}
   .contact-links{
     display:flex; gap:24px; flex-wrap:wrap;
@@ -244,6 +244,48 @@
   }
   .contact-links a{text-decoration:none;}
   .contact-links a:hover{text-decoration:underline;}
+
+  .contact-form{
+    max-width:480px;
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+    margin-top:8px;
+  }
+  .form-field{display:flex; flex-direction:column; gap:6px;}
+  .form-field[hidden]{display:none;}
+  .form-field label{
+    font-size:13px;
+    font-weight:600;
+    color:var(--text-muted);
+  }
+  .form-field input, .form-field textarea, .form-field select{
+    font-family:var(--font-body);
+    font-size:14.5px;
+    color:var(--text);
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:6px;
+    padding:10px 12px;
+    resize:vertical;
+  }
+  .form-field input:focus, .form-field textarea:focus, .form-field select:focus{
+    outline:2px solid var(--accent);
+    outline-offset:1px;
+    border-color:var(--accent);
+  }
+  .form-submit{
+    border:none;
+    cursor:pointer;
+    align-self:flex-start;
+  }
+  .form-submit:disabled{opacity:0.6; cursor:default;}
+  .form-status{
+    font-size:13.5px;
+    margin-top:2px;
+  }
+  .form-status--success{color:#1F7A4D;}
+  .form-status--error{color:#B0403C;}
 </style>
 </head>
 <body>
@@ -255,7 +297,7 @@
   <div class="title">Senior DevOps / Platform / SRE Engineer</div>
   <div class="location">New Zealand</div>
   <p class="summary">Cloud platform and reliability engineer with experience across Microsoft Azure and Amazon Web Services, spanning infrastructure automation, platform reliability, and IT service management. SFIA Foundation certified across eight competency areas at Level 3–4.</p>
-  <a class="btn" href="mailto:bhat.k@outlook.com?subject=Reaching%20out">
+  <a class="btn" href="#contact-form">
     Get in touch <span class="btn-arrow">→</span>
   </a>
 </header>
@@ -270,9 +312,9 @@
   <div class="section-label">Certifications</div>
   <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:12px 20px; margin-bottom:28px;">
     <h2 style="margin-bottom:0;">SFIA Framework Competencies</h2>
-    <a class="btn-outline" href="mailto:bhat.k@outlook.com?subject=Credly%20verification%20request&body=Hi%20Karthik%2C%0A%0AI'd%20like%20to%20verify%20your%20SFIA%20certifications%20on%20Credly.%0A%0AMy%20name%3A%0AMy%20email%3A%0AReason%20for%20request%3A">
+    <button type="button" class="btn-outline" id="verifyShortcut">
       Request verification <span class="btn-arrow">→</span>
-    </a>
+    </button>
   </div>
   <div id="skillList"></div>
 </section>
@@ -283,16 +325,45 @@
   <div id="roleList"></div>
 </section>
 
-<footer>
+<footer id="contact-form">
   <div class="section-label">Contact</div>
   <h2 style="margin-bottom:18px;">Get in touch</h2>
-  <a class="btn" href="mailto:bhat.k@outlook.com?subject=Reaching%20out" style="margin-bottom:22px;">
-    Email me <span class="btn-arrow">→</span>
-  </a>
-  <div class="contact-links">
-    <a href="mailto:bhat.k@outlook.com">bhat.k@outlook.com</a>
-    <!-- add LinkedIn URL here -->
-  </div>
+
+  <form class="contact-form" id="contactForm" action="https://formspree.io/f/mnjevkwy" method="POST">
+    <input type="hidden" name="_subject" id="cf-subject" value="Portfolio: General inquiry">
+    <div class="form-field">
+      <label for="cf-name">Name</label>
+      <input id="cf-name" name="name" type="text" required>
+    </div>
+    <div class="form-field">
+      <label for="cf-email">Email</label>
+      <input id="cf-email" name="email" type="email" required>
+    </div>
+    <div class="form-field">
+      <label for="cf-reason">Reason for reaching out</label>
+      <select id="cf-reason" name="reason">
+        <option>General inquiry</option>
+        <option>Request full CV</option>
+        <option>Collaboration request</option>
+        <option>Mentorship request</option>
+        <option>Consulting request</option>
+        <option>Credly verification request</option>
+        <option>Other</option>
+      </select>
+    </div>
+    <div class="form-field" id="cf-other-wrap" hidden>
+      <label for="cf-other">Please specify</label>
+      <input id="cf-other" name="reason_other" type="text">
+    </div>
+    <div class="form-field">
+      <label for="cf-message">Details</label>
+      <textarea id="cf-message" name="message" rows="4" required></textarea>
+    </div>
+    <button class="btn form-submit" type="submit">
+      Send message <span class="btn-arrow">→</span>
+    </button>
+    <div class="form-status" id="formStatus" role="status" aria-live="polite"></div>
+  </form>
 </footer>
 
 </div>
@@ -452,6 +523,68 @@
       <div class="role-desc"><span class="role-stack">${r.stack}</span> — ${r.desc}</div>
     `;
     roleList.appendChild(el);
+  });
+  // shared submit handler — posts to Formspree without leaving the page
+  function wireForm(form, statusEl, successMsg){
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = form.querySelector('.form-submit');
+      btn.disabled = true;
+      statusEl.textContent = 'Sending…';
+      statusEl.className = 'form-status';
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          statusEl.textContent = successMsg;
+          statusEl.className = 'form-status form-status--success';
+          form.reset();
+        } else {
+          throw new Error('Submission failed');
+        }
+      } catch (err) {
+        statusEl.textContent = 'Something went wrong — please try again in a moment.';
+        statusEl.className = 'form-status form-status--error';
+      } finally {
+        btn.disabled = false;
+      }
+    });
+  }
+
+  wireForm(
+    document.getElementById('contactForm'),
+    document.getElementById('formStatus'),
+    'Message sent — thanks, I\'ll get back to you soon.'
+  );
+
+  // keep the email subject in sync with the selected reason
+  const reasonSelect = document.getElementById('cf-reason');
+  const subjectField = document.getElementById('cf-subject');
+  const otherWrap = document.getElementById('cf-other-wrap');
+  const otherInput = document.getElementById('cf-other');
+
+  function syncReason(){
+    const isOther = reasonSelect.value === 'Other';
+    otherWrap.hidden = !isOther;
+    otherInput.required = isOther;
+    subjectField.value = isOther && otherInput.value
+      ? 'Portfolio: Other — ' + otherInput.value
+      : 'Portfolio: ' + reasonSelect.value;
+  }
+  reasonSelect.addEventListener('change', syncReason);
+  otherInput.addEventListener('input', syncReason);
+  syncReason();
+
+  // "Request verification" shortcut — scrolls to the form and preselects the reason
+  const verifyShortcut = document.getElementById('verifyShortcut');
+  verifyShortcut.addEventListener('click', () => {
+    reasonSelect.value = 'Credly verification request';
+    subjectField.value = 'Portfolio: Credly verification request';
+    document.getElementById('contact-form').scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('cf-name').focus({ preventScroll: true });
   });
 </script>
 
