@@ -114,6 +114,32 @@
   }
   .btn-outline:hover{background:var(--accent-soft);}
 
+  /* ---------- pricing popup ---------- */
+  .pricing-popover-wrap{position:relative; display:inline-flex;}
+  .pricing-popup{
+    position:absolute;
+    top:calc(100% + 8px);
+    left:0;
+    z-index:10;
+    width:240px;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:8px;
+    box-shadow:0 8px 24px rgba(28,35,44,0.12);
+    padding:16px;
+  }
+  .pricing-popup p{
+    font-size:13.5px;
+    color:var(--text-muted);
+    margin-bottom:12px;
+  }
+  .pricing-popup .btn{
+    font-size:13px;
+    padding:9px 14px;
+    width:100%;
+    justify-content:center;
+  }
+
   /* ---------- sections ---------- */
   section{padding:52px 0; border-bottom:1px solid var(--border);}
   section:last-of-type{border-bottom:none;}
@@ -311,11 +337,24 @@
   <div class="section-label">Capability</div>
   <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:12px 20px; margin-bottom:8px;">
     <h2 style="margin-bottom:0;">Services</h2>
-    <button type="button" class="btn-outline" id="bookCallShortcut">
-      Book a free 30-min call <span class="btn-arrow">→</span>
-    </button>
+    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+      <div class="pricing-popover-wrap">
+        <button type="button" class="btn-outline" id="pricingBtn" aria-haspopup="true" aria-expanded="false">
+          Pricing <span class="btn-arrow">→</span>
+        </button>
+        <div class="pricing-popup" id="pricingPopup" role="dialog" aria-label="Pricing" hidden>
+          <p>Contact me for a special package or an hourly rate.</p>
+          <button type="button" class="btn" id="pricingPopupCta">
+            Get in touch <span class="btn-arrow">→</span>
+          </button>
+        </div>
+      </div>
+      <button type="button" class="btn-outline" id="bookCallShortcut">
+        Book a free 30-min call <span class="btn-arrow">→</span>
+      </button>
+    </div>
   </div>
-  <p style="font-size:14px; color:var(--text-muted); margin-bottom:28px;">$120/hr &middot; first 30 minutes are free, no strings attached.</p>
+  <p style="font-size:14px; color:var(--text-muted); margin-bottom:28px;">First 30 minutes are free, no strings attached.</p>
   <div id="serviceList"></div>
 </section>
 
@@ -619,6 +658,41 @@
   bookCallShortcut.addEventListener('click', () => {
     reasonSelect.value = 'Free 30-min discovery call';
     syncReason();
+    document.getElementById('contact-form').scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('cf-name').focus({ preventScroll: true });
+  });
+
+  // "Pricing" button — toggles a small popup instead of showing a rate
+  const pricingBtn = document.getElementById('pricingBtn');
+  const pricingPopup = document.getElementById('pricingPopup');
+  const pricingPopupCta = document.getElementById('pricingPopupCta');
+
+  function closePricingPopup(){
+    pricingPopup.hidden = true;
+    pricingBtn.setAttribute('aria-expanded', 'false');
+  }
+  function openPricingPopup(){
+    pricingPopup.hidden = false;
+    pricingBtn.setAttribute('aria-expanded', 'true');
+  }
+
+  pricingBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (pricingPopup.hidden) openPricingPopup(); else closePricingPopup();
+  });
+  document.addEventListener('click', (e) => {
+    if (!pricingPopup.hidden && !pricingPopup.contains(e.target) && e.target !== pricingBtn) {
+      closePricingPopup();
+    }
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !pricingPopup.hidden) {
+      closePricingPopup();
+      pricingBtn.focus();
+    }
+  });
+  pricingPopupCta.addEventListener('click', () => {
+    closePricingPopup();
     document.getElementById('contact-form').scrollIntoView({ behavior: 'smooth' });
     document.getElementById('cf-name').focus({ preventScroll: true });
   });
