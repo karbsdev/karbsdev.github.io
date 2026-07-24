@@ -1,0 +1,702 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Karthik Bhat — Senior DevOps / Platform / SRE Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FBFBFA;
+    --surface:#FFFFFF;
+    --border:#E3E5E8;
+    --text:#1C232C;
+    --text-muted:#5A6472;
+    --text-faint:#8A93A0;
+    --accent:#274B75;
+    --accent-soft:#EEF2F7;
+
+    --font-display:'Source Serif 4', Georgia, serif;
+    --font-body:'Inter', system-ui, sans-serif;
+    --maxw:880px;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{color:var(--accent);}
+
+  :focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:3px;
+  }
+
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 32px;}
+
+  /* ---------- header ---------- */
+  header{
+    padding:72px 0 48px;
+    border-bottom:1px solid var(--border);
+  }
+  .name{
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:clamp(30px, 4.4vw, 42px);
+    line-height:1.15;
+    margin-bottom:4px;
+  }
+  .name span{
+    font-family:var(--font-body);
+    font-weight:400;
+    font-size:0.55em;
+    color:var(--text-faint);
+  }
+  .title{
+    font-size:17px;
+    color:var(--text-muted);
+    margin:10px 0 4px;
+  }
+  .location{
+    font-size:14px;
+    color:var(--text-faint);
+    margin-bottom:24px;
+  }
+  .summary{
+    max-width:640px;
+    font-size:15.5px;
+    color:var(--text-muted);
+    margin-bottom:28px;
+  }
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:var(--font-body);
+    font-size:14px;
+    font-weight:600;
+    color:#fff;
+    background:var(--accent);
+    padding:11px 20px;
+    border-radius:6px;
+    text-decoration:none;
+    transition:background .15s ease, transform .15s ease;
+  }
+  .btn:hover{
+    background:#1D3A5C;
+    transform:translateY(-1px);
+  }
+  .btn-arrow{transition:transform .15s ease;}
+  .btn:hover .btn-arrow{transform:translateX(2px);}
+  .btn-outline{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:var(--font-body);
+    font-size:13.5px;
+    font-weight:600;
+    color:var(--accent);
+    background:transparent;
+    border:1px solid var(--accent);
+    padding:9px 16px;
+    border-radius:6px;
+    text-decoration:none;
+    transition:background .15s ease;
+  }
+  .btn-outline:hover{background:var(--accent-soft);}
+
+  /* ---------- pricing popup ---------- */
+  .pricing-popover-wrap{position:relative; display:inline-flex;}
+  .pricing-popup{
+    position:absolute;
+    top:calc(100% + 8px);
+    left:0;
+    z-index:10;
+    width:240px;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:8px;
+    box-shadow:0 8px 24px rgba(28,35,44,0.12);
+    padding:16px;
+  }
+  .pricing-popup p{
+    font-size:13.5px;
+    color:var(--text-muted);
+    margin-bottom:12px;
+  }
+  .pricing-popup .btn{
+    font-size:13px;
+    padding:9px 14px;
+    width:100%;
+    justify-content:center;
+  }
+
+  /* ---------- sections ---------- */
+  section{padding:52px 0; border-bottom:1px solid var(--border);}
+  section:last-of-type{border-bottom:none;}
+
+  .section-label{
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:6px;
+  }
+  h2{
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:23px;
+    margin-bottom:28px;
+  }
+
+  /* ---------- services ---------- */
+  .service{
+    padding:18px 16px;
+    margin:0 -16px;
+    border-top:1px solid var(--border);
+    border-radius:8px;
+    transition:background .15s ease;
+  }
+  .service:hover{background:var(--surface); box-shadow:0 1px 2px rgba(28,35,44,0.04);}
+  .service:first-of-type{border-top:none;}
+  .service-name{
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:16px;
+    margin-bottom:4px;
+  }
+  .service-desc{
+    font-size:14.5px;
+    color:var(--text-muted);
+    max-width:640px;
+  }
+
+  /* ---------- SFIA skills ---------- */
+  .skill{
+    display:grid;
+    grid-template-columns:1fr auto;
+    gap:6px 20px;
+    padding:20px 16px;
+    margin:0 -16px;
+    border-top:1px solid var(--border);
+    border-radius:8px;
+    transition:background .15s ease;
+  }
+  .skill:hover{background:var(--surface); box-shadow:0 1px 2px rgba(28,35,44,0.04);}
+  .skill:first-of-type{border-top:none;}
+  .skill-name{
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:16.5px;
+  }
+  .skill-level{
+    font-size:12.5px;
+    font-weight:600;
+    color:var(--accent);
+    background:var(--accent-soft);
+    padding:4px 10px;
+    border-radius:4px;
+    white-space:nowrap;
+    height:fit-content;
+  }
+  .skill-desc{
+    grid-column:1 / -1;
+    font-size:14.5px;
+    color:var(--text-muted);
+    max-width:640px;
+    margin-top:4px;
+  }
+  .skill-meta{
+    grid-column:1 / -1;
+    font-size:12.5px;
+    color:var(--text-faint);
+    margin-top:2px;
+  }
+
+  /* ---------- experience ---------- */
+  .role{
+    padding:22px 16px;
+    margin:0 -16px;
+    border-top:1px solid var(--border);
+    border-radius:8px;
+    transition:background .15s ease;
+  }
+  .role:hover{background:var(--surface); box-shadow:0 1px 2px rgba(28,35,44,0.04);}
+  .role:first-of-type{border-top:none;}
+  .role-top{
+    display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:6px 16px;
+    margin-bottom:6px;
+  }
+  .role-company{
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:17px;
+  }
+  .role-dates{
+    font-size:13px;
+    color:var(--text-faint);
+  }
+  .role-title{
+    font-size:14.5px;
+    color:var(--text-muted);
+    margin-bottom:8px;
+  }
+  .role-desc{
+    font-size:14.5px;
+    color:var(--text-muted);
+    max-width:640px;
+  }
+  .role-stack{
+    display:inline;
+    color:var(--accent);
+    font-weight:500;
+  }
+
+  /* ---------- footer / contact form ---------- */
+  footer{padding:40px 0 64px;}
+  .contact-links{
+    display:flex; gap:24px; flex-wrap:wrap;
+    font-size:14px;
+  }
+  .contact-links a{text-decoration:none;}
+  .contact-links a:hover{text-decoration:underline;}
+
+  .contact-form{
+    max-width:480px;
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+    margin-top:8px;
+  }
+  .form-field{display:flex; flex-direction:column; gap:6px;}
+  .form-field[hidden]{display:none;}
+  .form-field label{
+    font-size:13px;
+    font-weight:600;
+    color:var(--text-muted);
+  }
+  .form-field input, .form-field textarea, .form-field select{
+    font-family:var(--font-body);
+    font-size:14.5px;
+    color:var(--text);
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:6px;
+    padding:10px 12px;
+    resize:vertical;
+  }
+  .form-field input:focus, .form-field textarea:focus, .form-field select:focus{
+    outline:2px solid var(--accent);
+    outline-offset:1px;
+    border-color:var(--accent);
+  }
+  .form-submit{
+    border:none;
+    cursor:pointer;
+    align-self:flex-start;
+  }
+  .form-submit:disabled{opacity:0.6; cursor:default;}
+  .form-status{
+    font-size:13.5px;
+    margin-top:2px;
+  }
+  .form-status--success{color:#1F7A4D;}
+  .form-status--error{color:#B0403C;}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<header>
+  <div class="name">Karthik Bhat</div>
+  <div class="title">Senior DevOps / Platform / SRE Engineer</div>
+  <div class="location">New Zealand</div>
+  <p class="summary">Cloud platform and reliability engineer with experience across Microsoft Azure and Amazon Web Services, spanning infrastructure automation, platform reliability, and IT service management. SFIA Foundation certified across eight competency areas at Level 3–4.</p>
+  <div style="display:flex; gap:12px; flex-wrap:wrap;">
+    <a class="btn" href="#contact-form">
+      Get in touch <span class="btn-arrow">→</span>
+    </a>
+    <a class="btn-outline" href="https://www.linkedin.com/in/reachkarthikbhat/" target="_blank" rel="noopener">
+      LinkedIn <span class="btn-arrow">→</span>
+    </a>
+  </div>
+</header>
+
+<section>
+  <div class="section-label">Capability</div>
+  <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:12px 20px; margin-bottom:8px;">
+    <h2 style="margin-bottom:0;">Services</h2>
+    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+      <div class="pricing-popover-wrap">
+        <button type="button" class="btn-outline" id="pricingBtn" aria-haspopup="true" aria-expanded="false">
+          Pricing <span class="btn-arrow">→</span>
+        </button>
+        <div class="pricing-popup" id="pricingPopup" role="dialog" aria-label="Pricing" hidden>
+          <p>Contact me for a special package or an hourly rate.</p>
+          <button type="button" class="btn" id="pricingPopupCta">
+            Get in touch <span class="btn-arrow">→</span>
+          </button>
+        </div>
+      </div>
+      <button type="button" class="btn-outline" id="bookCallShortcut">
+        Book a free 30-min call <span class="btn-arrow">→</span>
+      </button>
+    </div>
+  </div>
+  <p style="font-size:14px; color:var(--text-muted); margin-bottom:28px;">First 30 minutes are free, no strings attached.</p>
+  <div id="serviceList"></div>
+</section>
+
+<section>
+  <div class="section-label">Certifications</div>
+  <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:12px 20px; margin-bottom:28px;">
+    <h2 style="margin-bottom:0;">SFIA Framework Competencies</h2>
+    <button type="button" class="btn-outline" id="verifyShortcut">
+      Request verification <span class="btn-arrow">→</span>
+    </button>
+  </div>
+  <div id="skillList"></div>
+</section>
+
+<section>
+  <div class="section-label">Career</div>
+  <h2>Professional Experience</h2>
+  <div id="roleList"></div>
+</section>
+
+<footer id="contact-form">
+  <div class="section-label">Contact</div>
+  <h2 style="margin-bottom:18px;">Get in touch</h2>
+
+  <form class="contact-form" id="contactForm" action="https://formspree.io/f/mnjevkwy" method="POST">
+    <input type="hidden" name="_subject" id="cf-subject" value="Portfolio: General inquiry">
+    <div class="form-field">
+      <label for="cf-name">Name</label>
+      <input id="cf-name" name="name" type="text" required>
+    </div>
+    <div class="form-field">
+      <label for="cf-email">Email</label>
+      <input id="cf-email" name="email" type="email" required>
+    </div>
+    <div class="form-field">
+      <label for="cf-reason">Reason for reaching out</label>
+      <select id="cf-reason" name="reason">
+        <option>General inquiry</option>
+        <option>Request full CV</option>
+        <option>Collaboration request</option>
+        <option>Mentorship request</option>
+        <option>Consulting request</option>
+        <option>Free 30-min discovery call</option>
+        <option>Credly verification request</option>
+        <option>Other</option>
+      </select>
+    </div>
+    <div class="form-field" id="cf-other-wrap" hidden>
+      <label for="cf-other">Please specify</label>
+      <input id="cf-other" name="reason_other" type="text">
+    </div>
+    <div class="form-field" id="cf-phone-wrap" hidden>
+      <label for="cf-phone">Phone number</label>
+      <input id="cf-phone" name="phone" type="tel">
+    </div>
+    <div class="form-field">
+      <label for="cf-message">Details</label>
+      <textarea id="cf-message" name="message" rows="4" required></textarea>
+    </div>
+    <button class="btn form-submit" type="submit">
+      Send message <span class="btn-arrow">→</span>
+    </button>
+    <div class="form-status" id="formStatus" role="status" aria-live="polite"></div>
+  </form>
+</footer>
+
+</div>
+
+<script>
+  const services = [
+    {
+      name:"Cloud infrastructure design & build",
+      desc:"Architecting and building infrastructure on Azure and AWS — networking, compute, and environment provisioning for new or growing platforms."
+    },
+    {
+      name:"Reliability & availability engineering",
+      desc:"Setting up monitoring, alerting, and operational practices so systems meet agreed uptime targets and disruptions are caught early."
+    },
+    {
+      name:"Capacity & cost planning",
+      desc:"Right-sizing infrastructure for current and forecast demand, balancing performance requirements against running cost."
+    },
+    {
+      name:"Root cause investigation",
+      desc:"Diagnosing recurring technical issues and implementing permanent fixes rather than repeated workarounds."
+    },
+    {
+      name:"Automation & tooling",
+      desc:"Writing scripts, pipelines, and small software components that reduce manual work and support platform operations."
+    },
+    {
+      name:"Configuration & change management",
+      desc:"Governance over environment and deployment configuration, keeping changes consistent and traceable across systems."
+    },
+    {
+      name:"DevSecOps",
+      desc:"Shifting security left into the development and deployment pipeline, with a focus on platform security and compliance (PCI DSS, SOC 2 Type 2)."
+    },
+    {
+      name:"System architecture",
+      desc:"Translating business and technical requirements into a system design that's practical to build and operate."
+    },
+    {
+      name:"System integration & deployment",
+      desc:"Bringing individual components together and testing them as a working system, ready for production."
+    },
+  ];
+
+  const serviceList = document.getElementById('serviceList');
+  services.forEach(s => {
+    const el = document.createElement('div');
+    el.className = 'service';
+    el.innerHTML = `
+      <div class="service-name">${s.name}</div>
+      <div class="service-desc">${s.desc}</div>
+    `;
+    serviceList.appendChild(el);
+  });
+
+  const skills = [
+    {
+      name:"Availability Management",
+      level:"Level 4",
+      band:"Enable",
+      desc:"Planning and managing IT services so they consistently meet agreed availability targets — identifying risks that could cause disruption and working to minimise downtime."
+    },
+    {
+      name:"Capacity Management",
+      level:"Level 4",
+      band:"Enable",
+      desc:"Ensuring computing resources — servers, storage, network — are sized correctly for current and future demand, balancing performance against cost."
+    },
+    {
+      name:"IT Infrastructure",
+      level:"Level 4",
+      band:"Enable",
+      desc:"Designing, building, and maintaining the underlying infrastructure — physical and cloud-based — that IT services and applications run on."
+    },
+    {
+      name:"Problem Management",
+      level:"Level 4",
+      band:"Enable",
+      desc:"Investigating the underlying causes of recurring issues and putting permanent fixes in place, rather than repeatedly resolving the same symptoms."
+    },
+    {
+      name:"Programming / Software Development",
+      level:"Level 3",
+      band:"Apply",
+      desc:"Designing, writing, testing, and maintaining software components that deliver value to stakeholders."
+    },
+    {
+      name:"Software Configuration",
+      level:"Level 4",
+      band:"Enable",
+      desc:"Managing and controlling changes to software and systems configuration, keeping environments consistent and changes traceable."
+    },
+    {
+      name:"Systems Design",
+      level:"Level 4",
+      band:"Enable",
+      desc:"Translating business and technical requirements into a coherent system architecture and detailed design."
+    },
+    {
+      name:"Systems Integration and Build",
+      level:"Level 4",
+      band:"Enable",
+      desc:"Assembling individual system components and testing them together, so the complete system works correctly as a whole."
+    },
+  ];
+
+  const skillList = document.getElementById('skillList');
+  skills.forEach(s => {
+    const el = document.createElement('div');
+    el.className = 'skill';
+    el.innerHTML = `
+      <div class="skill-name">${s.name}</div>
+      <div class="skill-level">${s.level} — ${s.band}</div>
+      <div class="skill-desc">${s.desc}</div>
+      <div class="skill-meta">SFIA Foundation · Digital Skills Agency</div>
+    `;
+    skillList.appendChild(el);
+  });
+
+  const roles = [
+    {
+      company:"Turners Auto Group",
+      dates:"2026 — present",
+      title:"Site Reliability Engineer",
+      stack:"AWS (EKS, Serverless), Datadog",
+      desc:"Reliability engineering and platform operations for cloud-hosted retail systems."
+    },
+    {
+      company:"Serko",
+      dates:"2022 — 2026",
+      title:"Cloud Platform Engineer",
+      stack:"Microsoft Azure (AKS, Pulumi), New Relic, PCI DSS, SOC 2 Type 2",
+      desc:"Cloud platform engineering and infrastructure automation for a SaaS product."
+    },
+    {
+      company:"Tangelo",
+      dates:"2021-2022",
+      title:"Infrastructure Engineer",
+      stack:"On-prem cloud, NAS, Systems Engineering",
+      desc:"Infrastructure provisioning and configuration management."
+    },
+    {
+      company:"Sophos",
+      dates:"2018 — 2020",
+      title:"Software Engineer - Intern",
+      stack:"Test automation frameworks",
+      desc:"Software quality assurance and automated testing for security software."
+    },
+  ];
+
+  const roleList = document.getElementById('roleList');
+  roles.forEach(r => {
+    const el = document.createElement('div');
+    el.className = 'role';
+    el.innerHTML = `
+      <div class="role-top">
+        <div class="role-company">${r.company}</div>
+        <div class="role-dates">${r.dates}</div>
+      </div>
+      <div class="role-title">${r.title}</div>
+      <div class="role-desc"><span class="role-stack">${r.stack}</span> — ${r.desc}</div>
+    `;
+    roleList.appendChild(el);
+  });
+  // shared submit handler — posts to Formspree without leaving the page
+  function wireForm(form, statusEl, successMsg){
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = form.querySelector('.form-submit');
+      btn.disabled = true;
+      statusEl.textContent = 'Sending…';
+      statusEl.className = 'form-status';
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          statusEl.textContent = successMsg;
+          statusEl.className = 'form-status form-status--success';
+          form.reset();
+        } else {
+          throw new Error('Submission failed');
+        }
+      } catch (err) {
+        statusEl.textContent = 'Something went wrong — please try again in a moment.';
+        statusEl.className = 'form-status form-status--error';
+      } finally {
+        btn.disabled = false;
+      }
+    });
+  }
+
+  wireForm(
+    document.getElementById('contactForm'),
+    document.getElementById('formStatus'),
+    'Message sent — thanks, I\'ll get back to you soon.'
+  );
+
+  // keep the email subject in sync with the selected reason
+  const reasonSelect = document.getElementById('cf-reason');
+  const subjectField = document.getElementById('cf-subject');
+  const otherWrap = document.getElementById('cf-other-wrap');
+  const otherInput = document.getElementById('cf-other');
+  const phoneWrap = document.getElementById('cf-phone-wrap');
+  const phoneInput = document.getElementById('cf-phone');
+
+  function syncReason(){
+    const isOther = reasonSelect.value === 'Other';
+    otherWrap.hidden = !isOther;
+    otherInput.required = isOther;
+
+    const isCall = reasonSelect.value === 'Free 30-min discovery call';
+    phoneWrap.hidden = !isCall;
+    phoneInput.required = isCall;
+
+    subjectField.value = isOther && otherInput.value
+      ? 'Portfolio: Other — ' + otherInput.value
+      : 'Portfolio: ' + reasonSelect.value;
+  }
+  reasonSelect.addEventListener('change', syncReason);
+  otherInput.addEventListener('input', syncReason);
+  syncReason();
+
+  // "Request verification" shortcut — scrolls to the form and preselects the reason
+  const verifyShortcut = document.getElementById('verifyShortcut');
+  verifyShortcut.addEventListener('click', () => {
+    reasonSelect.value = 'Credly verification request';
+    subjectField.value = 'Portfolio: Credly verification request';
+    document.getElementById('contact-form').scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('cf-name').focus({ preventScroll: true });
+  });
+
+  // "Book a free 30-min call" shortcut — scrolls to the form and preselects the reason
+  const bookCallShortcut = document.getElementById('bookCallShortcut');
+  bookCallShortcut.addEventListener('click', () => {
+    reasonSelect.value = 'Free 30-min discovery call';
+    syncReason();
+    document.getElementById('contact-form').scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('cf-name').focus({ preventScroll: true });
+  });
+
+  // "Pricing" button — toggles a small popup instead of showing a rate
+  const pricingBtn = document.getElementById('pricingBtn');
+  const pricingPopup = document.getElementById('pricingPopup');
+  const pricingPopupCta = document.getElementById('pricingPopupCta');
+
+  function closePricingPopup(){
+    pricingPopup.hidden = true;
+    pricingBtn.setAttribute('aria-expanded', 'false');
+  }
+  function openPricingPopup(){
+    pricingPopup.hidden = false;
+    pricingBtn.setAttribute('aria-expanded', 'true');
+  }
+
+  pricingBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (pricingPopup.hidden) openPricingPopup(); else closePricingPopup();
+  });
+  document.addEventListener('click', (e) => {
+    if (!pricingPopup.hidden && !pricingPopup.contains(e.target) && e.target !== pricingBtn) {
+      closePricingPopup();
+    }
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !pricingPopup.hidden) {
+      closePricingPopup();
+      pricingBtn.focus();
+    }
+  });
+  pricingPopupCta.addEventListener('click', () => {
+    closePricingPopup();
+    document.getElementById('contact-form').scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('cf-name').focus({ preventScroll: true });
+  });
+</script>
+
+</body>
+</html>
